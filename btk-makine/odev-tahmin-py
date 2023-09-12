@@ -1,0 +1,29 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn import preprocessing
+from sklearn.preprocessing import LabelEncoder as le
+veriler = pd.read_csv('data/maaslar_yeni.csv')
+print(veriler)
+
+x = veriler.iloc[:,2:3] # 1. Durum:x1 x2 ve x3 kolonları kontrol, 2.durum için x2 ve x3 çıkartıyoruz [:,2:5]
+y = veriler.iloc[:,5:]
+
+X= x.values
+Y= y.values
+
+#linear regression : x ve y verileri arasındaki ilişkiyi kontrol eder, p value hesaplar.
+# P-değeri, olayların şans eseri meydana gelme olasılığının (yani sıfır hipotezin doğru olması) ne kadar olası olduğunu açıklayan bir sayıdır.
+from sklearn.linear_model import LinearRegression
+lin_reg = LinearRegression()
+lin_reg.fit(X,Y)
+
+# p value ları hesaplatmak için model  oluşturma
+import statsmodels.api as sm
+model = sm.OLS(lin_reg.predict(X), X)
+print(model.fit().summary())
+# 1. Durum sonuç
+# dep. variable : y (bağımlı değişken)
+# r-squared: 0.903
+# adj. r-squared(düzeltilmiş r-squared):0.892
+#p value 0.05 anlamlı - isteğe göre 0.01 (x2= 0.997 ve x3= -0.789 yüksek değeri çıkartıyoruz) 

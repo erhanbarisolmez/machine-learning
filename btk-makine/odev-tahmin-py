@@ -4,11 +4,10 @@ import pandas as pd
 from sklearn import preprocessing
 from sklearn.preprocessing import LabelEncoder as le
 veriler = pd.read_csv('data/maaslar_yeni.csv')
-print(veriler)
+print(veriler.corr())
 
 x = veriler.iloc[:,2:3] # 1. Durum:x1 x2 ve x3 kolonları kontrol, 2.durum için x2 ve x3 çıkartıyoruz [:,2:5]
 y = veriler.iloc[:,5:]
-
 X= x.values
 Y= y.values
 
@@ -27,3 +26,23 @@ print(model.fit().summary())
 # r-squared: 0.903
 # adj. r-squared(düzeltilmiş r-squared):0.892
 #p value 0.05 anlamlı - isteğe göre 0.01 (x2= 0.997 ve x3= -0.789 yüksek değeri çıkartıyoruz) 
+
+
+lin_reg2 = LinearRegression()
+lin_reg2.fit(x_poly, y);
+# Polinom Regresyon, bağımsız (X) ile bağımlı (y) arasındaki ikişkinin n'inci derece polinom olarak modellendiği regresyon analizi türüdür.
+#Görünüşe göre Python'da scikit-learn'i kullanarak polinom regresyonu gerçekleştirmeye çalışıyorsunuz. Polinom regresyon, bağımsız değişken (X) ile bağımlı değişken (y) arasındaki ilişkinin n'inci derece polinom olarak modellendiği bir regresyon analizi türüdür.
+#XKodunuzda, önce giriş verilerinizi kullanarak derece 4'ün polinom özelliklerine dönüştürüyorsunuz PolynomialFeaturesve ardından LinearRegressiondönüştürülen verilere doğrusal bir regresyon modeli ( ) uyduruyorsunuz. Bu, özellikleriniz ile hedef değişken arasındaki doğrusal olmayan ilişkileri yakalamanıza olanak tanır.
+
+from sklearn.preprocessing import PolynomialFeatures
+#PolynomialFeatures 4 dereceli bir örnek oluşturun ve giriş verilerinizi Xpolinom özelliklerine dönüştürün:
+poly_reg = PolynomialFeatures(degree=4)
+x_poly = poly_reg.fit_transform(X)
+print(x_poly)
+#Polinom regresyonunu gerçekleştirmek için bir örneğini oluşturun LinearRegressionve bunu polinom özelliklerine uydurun:
+lin_reg2 = LinearRegression()
+lin_reg2.fit(x_poly,y)
+#Şimdi, lin_reg2yeni veriler üzerinde tahminler yapmak için kullanılabilecek eğitilmiş polinom regresyon modeliniz.
+
+#tahminler
+ 

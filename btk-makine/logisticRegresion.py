@@ -30,3 +30,18 @@ logr.fit(X_train, y_train)
 y_pred = logr.predict(X_test)
 print(y_pred)
 print(y_test)
+
+# tahmin ile asıl veri doğruluk oranı sonucunu veriyor
+from sklearn.metrics import confusion_matrix
+cm = confusion_matrix(y_test, y_pred)
+print(cm)
+
+#KNN algoritması
+from sklearn.neighbors import KNeighborsClassifier
+knn = KNeighborsClassifier(n_neighbors=1, metric='minkowski')
+knn.fit(X_train, y_train)
+
+y_pred = knn.predict(X_test)
+
+cm= confusion_matrix(y_test, y_pred)
+print(cm)

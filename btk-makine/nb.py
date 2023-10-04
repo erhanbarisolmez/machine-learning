@@ -55,3 +55,13 @@ y_pred = svc.predict(X_test)
 cm = confusion_matrix(y_test, y_pred)
 print("SVC")
 print(cm)
+
+#naif bayes
+from sklearn.naive_bayes import GaussianNB
+gnb = GaussianNB()
+gnb.fit(X_train, y_train)
+
+y_pred = gnb.predict(X_test)
+cm = confusion_matrix(y_test, y_pred)
+print('GNB')
+print(cm)

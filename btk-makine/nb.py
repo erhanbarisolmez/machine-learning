@@ -83,5 +83,13 @@ y_pred = rfc.predict(X_test) #tahmin
 cm = confusion_matrix(y_test, y_pred) #test
 print('RFC')
 print(cm)
+print(y_proba[:,0])
 
-
+# ROC, TPR, FPR
+y_proba = rfc.predict_proba(X_test)
+print(y_test)
+print(y_proba[:,0])
+from sklearn import metrics
+fpr, tpr, thold = metrics.roc_curve(y_test, y_proba[:,0], pos_label='e')
+print(fpr)
+print(tpr)

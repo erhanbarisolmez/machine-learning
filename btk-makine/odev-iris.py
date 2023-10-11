@@ -29,7 +29,7 @@ plt.yticks(())
 fig = plt.figure(1, figsize=(8,6))
 ax = Axes3D(fig, elev = -150, azim =110)
 ax.scatter(iris.data[:,0], iris.data[:, 1], iris.data[:,2], c=y,
-              cmap = plt.cm.Set1, edgeColor = 'k', s=40)
+              cmap = plt.cm.Set1, edgecolor = 'k', s=40)
 
 ax.set_title("IRIS Verisi")
 ax.set_xlabel("birinci özellik")

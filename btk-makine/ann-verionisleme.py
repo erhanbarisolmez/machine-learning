@@ -25,3 +25,24 @@ ohe = ColumnTransformer([("ohe", OneHotEncoder(dtype=float), [1])],
     )
 X = ohe.fit_transform(X)
 X = X[:, 1:]
+
+#verilerin eğitimi ve test için bölünmesi
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split(X,Y, test_size=0.33, random_state=0) 
+
+#verilerin ölçeklenmesi
+from sklearn.preprocessing import StandardScaler
+sc = StandardScaler()
+X_train = sc.fit_transform(x_train)
+X_test = sc.fit_transform(x_test)
+
+# yapay sinir ağı
+import keras
+from keras.models import Sequential
+from keras.layers import Dense
+
+classifier = Sequential()
+classifier.add(Dense(6, kernel_initializer = "uniform", activation= "relu", input_dim = 11))
+classifier.add(Dense(6, kernel_initializer="uniform", activation="relu"))
+classifier.add(Dense(1, kernel_initializer="uniform", activation="sigmoid"))
+classifier.compile(optimizer="adam", loss="binary_crossentropy", metrics= ['accuracy'])

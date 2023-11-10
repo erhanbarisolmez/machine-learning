@@ -54,3 +54,21 @@ print("\n\nPCA'lı ve PCA'sız çıkan sonuç: ")
 cm3 = confusion_matrix(y_pred, y_pred2)
 print(cm3)
 
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis as LDA
+
+lda = LDA(n_components=2)
+
+X_train_lda = lda.fit_transform(X_train, y_train)
+X_test_lda = lda.transform(X_test)
+
+#LDA dönüşümden sonra 
+classifier_lda = LogisticRegression(random_state=0)
+classifier_lda.fit(X_train_lda, y_train)
+
+#LDA verisini tahmin et
+y_pred_lda = classifier_lda.predict(X_test_lda)
+
+#LDA sonrası / orijinal
+print('\n\nlda ve orijinal')
+cm4 = confusion_matrix(y_pred, y_pred_lda)
+print(cm4)

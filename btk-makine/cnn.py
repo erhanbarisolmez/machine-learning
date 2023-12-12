@@ -50,8 +50,56 @@ test_set = test_datagen.flow_from_directory('btk-makine/data/veriler/test_set',
                                             batch_size = 1,
                                             class_mode = 'binary')
 
-classifier.fit_generator(training_set,
-                         samples_per_epoch = 8000,
-                         nb_epoch = 1,
+history = classifier.fit(training_set,
+                         steps_per_epoch=len(training_set),
+                         epochs=1,
                          validation_data= test_set,
-                         nb_val_samples = 2000)
+                         validation_steps=len(test_set))
+
+print(history.history)
+
+import numpy as np
+import pandas as pd
+
+test_set.reset()
+pred = classifier.predict_generator(test_set, verbose=1)
+#pred = list(map(round, pred))
+pred[pred > .5] = 1
+pred[pred <= .5] = 0
+
+
+print('test_labels')
+print(test_labels)
+
+
+test_labels = []
+
+for i in range(0, int(203)):
+  test_labels.extend(np.array(test_set[i][1]))
+
+print("test_labels : ", test_labels)
+
+#labels = (training_set.class_indices)
+'''
+idx = []  
+for i in test_set:
+    ixx = (test_set.batch_index - 1) * test_set.batch_size
+    ixx = test_set.filenames[ixx : ixx + test_set.batch_size]
+    idx.append(ixx)
+    print(i)
+    print(idx)
+'''
+dosyaisimleri = test_set.filenames
+#abc = test_set.
+#print(idx)
+#test_labels = test_set.
+sonuc = pd.DataFrame()
+sonuc['dosyaisimleri']= dosyaisimleri
+sonuc['tahminler'] = pred
+sonuc['test'] = test_labels   
+
+from sklearn.metrics import confusion_matrix
+
+
+cm = confusion_matrix(test_labels, pred)
+print (cm)

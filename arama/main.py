@@ -1,3 +1,4 @@
+# Yayılım öncelikli arama
 grafik = {
     'A': ['B','C'],
     'B': ['D','E'],
@@ -23,3 +24,16 @@ def bfs(ziyaret,grafik,node):
                 yigin.append(komsu)
 
 bfs(ziyaret, grafik, 'A')
+
+# Derin öncelikli arama
+ziyaret=set()
+
+def dfs(ziyaret,grafik,node):
+    if node not in ziyaret:
+        print(node)
+        ziyaret.add(node)
+        for komsu in grafik[node]:
+            dfs(ziyaret, grafik, komsu)
+
+dfs(ziyaret, grafik, 'A')
+
